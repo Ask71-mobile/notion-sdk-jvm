@@ -7,6 +7,7 @@ constructor(
     val type: FileType,
     var external: ExternalFileDetails? = null,
     var file: FileDetails? = null,
+    var fileUploadId: String? = null,
 ) : Icon, Cover {
   companion object {
     @JvmStatic
@@ -26,6 +27,11 @@ constructor(
     @JvmStatic
     fun file(url: String, expiryTime: String? = null): File {
       return file(FileDetails(url = url, expiryTime = expiryTime))
+    }
+
+    @JvmStatic
+    fun fileUpload(fileUploadId: String): File {
+      return File(type = FileType.FileUpload, fileUploadId = fileUploadId)
     }
   }
 }

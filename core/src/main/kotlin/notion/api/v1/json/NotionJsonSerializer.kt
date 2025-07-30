@@ -9,6 +9,8 @@ import notion.api.v1.model.databases.Databases
 import notion.api.v1.model.databases.QueryResults
 import notion.api.v1.model.error.Error
 import notion.api.v1.model.error.OAuthError
+import notion.api.v1.model.files.FileUpload
+import notion.api.v1.model.files.FileUploadPartResponse
 import notion.api.v1.model.oauth.OAuthTokenResult
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PagePropertyItem
@@ -20,6 +22,8 @@ import notion.api.v1.request.comments.CreateCommentRequest
 import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.databases.UpdateDatabaseRequest
+import notion.api.v1.request.files.CompleteFileUploadRequest
+import notion.api.v1.request.files.CreateFileUploadRequest
 import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
@@ -42,6 +46,8 @@ interface NotionJsonSerializer {
   fun toOAuthTokenResult(body: String): OAuthTokenResult
   fun toUser(body: String): User
   fun toUsers(body: String): Users
+  fun toFileUpload(body: String): FileUpload
+  fun toFileUploadPartResponse(body: String): FileUploadPartResponse
 
   fun toJsonString(request: CreateDatabaseRequest): String
   fun toJsonString(request: UpdateDatabaseRequest): String
@@ -53,4 +59,6 @@ interface NotionJsonSerializer {
   fun toJsonString(request: QueryDatabaseRequest): String
   fun toJsonString(request: UpdatePageRequest): String
   fun toJsonString(request: ExchangeAuthCodeRequest): String
+  fun toJsonString(request: CreateFileUploadRequest): String
+  fun toJsonString(request: CompleteFileUploadRequest): String
 }

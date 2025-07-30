@@ -10,7 +10,8 @@ enum class ObjectType @JvmOverloads constructor(val value: String) {
   @SerializedName("comment") Comment("comment"),
   @SerializedName("property_item") PropertyItem("property_item"),
   @SerializedName("list") List("list"),
-  @SerializedName("user") User("user");
+  @SerializedName("user") User("user"),
+  @SerializedName("file_upload") FileUpload("file_upload");
 
   override fun toString(): String = value
 }

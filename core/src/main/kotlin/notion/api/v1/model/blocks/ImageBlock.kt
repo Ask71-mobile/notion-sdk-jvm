@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 import notion.api.v1.model.common.ExternalFileDetails
 import notion.api.v1.model.common.FileDetails
+import notion.api.v1.model.common.FileUploadDetails
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
@@ -56,6 +57,7 @@ constructor(
       val type: String? = null,
       val external: ExternalFileDetails? = null,
       val file: FileDetails? = null,
+      val file_upload: FileUploadDetails? = null,
       val caption: List<PageProperty.RichText>? = null,
   )
 }

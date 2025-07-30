@@ -17,6 +17,8 @@ import notion.api.v1.model.databases.QueryResults
 import notion.api.v1.model.databases.query.filter.CompoundFilterElement
 import notion.api.v1.model.error.Error
 import notion.api.v1.model.error.OAuthError
+import notion.api.v1.model.files.FileUpload
+import notion.api.v1.model.files.FileUploadPartResponse
 import notion.api.v1.model.oauth.OAuthTokenResult
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PagePropertyItem
@@ -29,6 +31,8 @@ import notion.api.v1.request.comments.CreateCommentRequest
 import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.databases.UpdateDatabaseRequest
+import notion.api.v1.request.files.CompleteFileUploadRequest
+import notion.api.v1.request.files.CreateFileUploadRequest
 import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
@@ -82,6 +86,8 @@ class GsonSerializer : NotionJsonSerializer {
 
   override fun toUser(body: String): User = gson.fromJson(body, User::class.java)
   override fun toUsers(body: String): Users = gson.fromJson(body, Users::class.java)
+  override fun toFileUpload(body: String): FileUpload = gson.fromJson(body, FileUpload::class.java)
+  override fun toFileUploadPartResponse(body: String): FileUploadPartResponse = gson.fromJson(body, FileUploadPartResponse::class.java)
 
   override fun toJsonString(request: CreateDatabaseRequest): String = gson.toJson(request)
   override fun toJsonString(request: UpdateDatabaseRequest): String = gson.toJson(request)
@@ -96,4 +102,6 @@ class GsonSerializer : NotionJsonSerializer {
   override fun toJsonString(request: UpdatePageRequest): String = gson.toJson(request)
   override fun toJsonString(request: ExchangeAuthCodeRequest): String = gson.toJson(request)
   override fun toJsonString(request: CreateCommentRequest): String = gson.toJson(request)
+  override fun toJsonString(request: CreateFileUploadRequest): String = gson.toJson(request)
+  override fun toJsonString(request: CompleteFileUploadRequest): String = gson.toJson(request)
 }

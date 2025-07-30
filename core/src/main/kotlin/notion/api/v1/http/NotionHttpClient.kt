@@ -36,6 +36,14 @@ interface NotionHttpClient : AutoCloseable, Closeable {
       headers: Map<String, String>,
   ): NotionHttpResponse
 
+  fun postMultipartBody(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, List<String>> = emptyMap(),
+      formData: Map<String, Any>,
+      headers: Map<String, String>
+  ): NotionHttpResponse
+
   override fun close() {}
 
   // ------------------------------

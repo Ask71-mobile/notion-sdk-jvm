@@ -1,11 +1,14 @@
 package notion.api.v1.http
 
+import java.io.InputStream
 import java.util.concurrent.TimeUnit
 import notion.api.v1.logging.NotionLogger
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
@@ -134,6 +137,57 @@ class OkHttp4Client : NotionHttpClient {
               status = resp.code,
               headers = resp.headers.toMultimap(),
               body = resp.body?.string() ?: "")
+      debugLogSuccess(logger, startTimeMillis, response)
+      return response
+    } catch (e: Exception) {
+      warnLogFailure(logger, e)
+      throw e
+    }
+  }
+
+  override fun postMultipartBody(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, List<String>>,
+      formData: Map<String, Any>,
+      headers: Map<String, String>
+  ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
+    val fullUrl = buildFullUrl(url, buildQueryString(query))
+    
+    val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+    val mimeType = formData["mimeType"] as? String
+    
+    formData.forEach { (name, value) ->
+      if (name != "mimeType") { // Don't write mimeType as a form field
+        when (value) {
+          is InputStream -> {
+            val contentType = if (name == "file" && mimeType != null) mimeType else "application/octet-stream"
+            val requestBody = RequestBody.create(
+                contentType.toMediaType(),
+                value.readBytes()
+            )
+            multipartBodyBuilder.addFormDataPart(name, "file", requestBody)
+          }
+          else -> {
+            multipartBodyBuilder.addFormDataPart(name, value.toString())
+          }
+        }
+      }
+    }
+    
+    val requestBuilder = Request.Builder().url(fullUrl).post(multipartBodyBuilder.build())
+    headers.forEach { (name, value) -> requestBuilder.header(name, value) }
+    val request = requestBuilder.build()
+    
+    debugLogStart(logger, request.method, fullUrl, "multipart form data")
+    try {
+      val resp = client.newCall(request).execute()
+      val response = NotionHttpResponse(
+          status = resp.code,
+          headers = resp.headers.toMultimap(),
+          body = resp.body?.string() ?: ""
+      )
       debugLogSuccess(logger, startTimeMillis, response)
       return response
     } catch (e: Exception) {
