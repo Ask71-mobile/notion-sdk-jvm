@@ -87,6 +87,7 @@ constructor(
       val type: FileType? = null,
       val file: FileDetails? = null,
       val external: ExternalFileDetails? = null,
+      val file_upload: FileUploadDetails? = null,
   )
 
   data class Date
