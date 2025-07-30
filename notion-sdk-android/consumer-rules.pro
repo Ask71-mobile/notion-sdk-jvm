@@ -1,0 +1,3 @@
+-keep class notion.api.v1.** { *; }
+  -keepattributes Signature
+  -keepattributes *Annotation*
