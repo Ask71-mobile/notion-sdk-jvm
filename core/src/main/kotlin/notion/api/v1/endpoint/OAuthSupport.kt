@@ -30,6 +30,7 @@ interface OAuthSupport : EndpointsSupport {
     if (this.redirectUri == null) {
       throw IllegalStateException("Setting redirectUri to NotionClient is required")
     }
+    @Suppress("NewApi")
     val base64Value =
         String(
             Base64.getEncoder()
