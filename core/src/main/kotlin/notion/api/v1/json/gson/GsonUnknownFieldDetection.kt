@@ -47,6 +47,7 @@ class GsonUnknownFieldDetection : TypeAdapterFactory {
         for (key in deserializedFields.keys) {
           sb.append("$key, ")
         }
+        @Suppress("NewApi")
         val boundFieldsStr = sb.append("... (" + type!!.type.typeName + ")").toString()
         // Then replace it with our implementation throwing exception if the value is null.
         deserializedFields =
