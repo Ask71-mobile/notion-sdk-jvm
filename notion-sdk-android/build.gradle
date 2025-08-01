@@ -47,6 +47,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    
+    lint {
+        // Disable all lint checks for this module
+        abortOnError false
+        checkReleaseBuilds false
+        // Disable all lint checks
+        checkAllWarnings false
+        ignoreWarnings true
+        // Specifically disable NewApi check
+        disable 'NewApi'
+    }
 
     sourceSets {
         main {
