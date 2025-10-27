@@ -12,6 +12,7 @@ target/
 *.iml
 *.ipr
 *.iws
+local.properties
 build/
 downloaded_files/
 node_modules/
